@@ -6,3 +6,13 @@ anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Button" type="Button" parent="."]
+margin_left = 905.829
+margin_top = 29.2202
+margin_right = 996.829
+margin_bottom = 76.2202
+text = "Launch"
+__meta__ = {
+"_edit_use_anchors_": false
+}

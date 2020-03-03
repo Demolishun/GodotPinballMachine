@@ -37,5 +37,5 @@ shape = SubResource( 4 )
 [node name="BallSpawner" type="Area" parent="Arm"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Arm/BallSpawner"]
-transform = Transform( 1, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, -1.24, 2.02022e-06 )
+transform = Transform( 1.5, 0, 0, 0, 0.25, 0, 0, 0, 1.5, 0, -1.24, 2.02022e-06 )
 shape = SubResource( 5 )

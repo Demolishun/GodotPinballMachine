@@ -1,14 +1,31 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://board/machine_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://controls/DeveloperPanel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game_scene_main.gd" type="Script" id=3]
 [ext_resource path="res://moving_objects/Plunger.tscn" type="PackedScene" id=4]
 [ext_resource path="res://board/WallsLR.tscn" type="PackedScene" id=5]
+[ext_resource path="res://controls/Launch.tscn" type="PackedScene" id=6]
 
 [sub_resource type="BoxShape" id=1]
 
 [sub_resource type="BoxShape" id=2]
+
+[sub_resource type="Animation" id=3]
+resource_name = "PlungerAnimPull"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Base/Plunger/Arm:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 2 ) ]
+}
 
 [node name="Root" type="Spatial"]
 script = ExtResource( 3 )
@@ -18,7 +35,6 @@ script = ExtResource( 3 )
 [node name="Area" type="Area" parent="Base"]
 space_override = 3
 gravity_vec = Vector3( 0, -1, 2 )
-priority = 5.0
 
 [node name="CollisionShape" type="CollisionShape" parent="Base/Area"]
 transform = Transform( 20, 0, 0, 0, 2, 0, 0, 0, 40, 0, 3, 0 )
@@ -27,22 +43,43 @@ shape = SubResource( 1 )
 [node name="Plunger" parent="Base" instance=ExtResource( 4 )]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 18, 2.1, 35.5 )
 
+[node name="Arm" parent="Base/Plunger" index="1"]
+transform = Transform( 0.5, 0, 0, 0, -8.14603e-07, -0.5, 0, 2.5, -4.07302e-08, 0, 0, 2 )
+
+[node name="BallSpawner" parent="Base/Plunger/Arm" index="1"]
+space_override = 3
+gravity_vec = Vector3( 0, -1, 2 )
+priority = 1.0
+
 [node name="LaunchRetainer" parent="Base" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.8, 16.3, 1.6, 7.2 )
 
 [node name="Main Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 30, 50 )
+transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 30, 55 )
 current = true
 
 [node name="DeveloperPanel" parent="." instance=ExtResource( 2 )]
 margin_left = 48.0
 margin_top = 27.0
 margin_right = -880.0
-margin_bottom = -103.0
+margin_bottom = -363.0
 
 [node name="StaticBody" type="StaticBody" parent="."]
 transform = Transform( 20, 0, 0, 0, 0.1, 0, 0, 0, 40, 0, 5, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 2 )
+
+[node name="Launch" parent="." instance=ExtResource( 6 )]
+margin_left = 7.0
+margin_top = 342.0
+margin_right = 7.0
+
+[node name="LaunchTimer" type="Timer" parent="."]
+process_mode = 0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/PlungerAnimPull = SubResource( 3 )
+
+[editable path="Base/Plunger"]
