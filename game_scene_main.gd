@@ -26,6 +26,7 @@ func _ready():
 	$Launch/Button.connect("button_up", self, "launch_release")
 	$AnimationPlayer.connect("animation_finished", self, "animation_finished")
 	#$Base/Plunger/Arm/BallSpawner.connect("body_exited", self, "body_exited")
+	$Base/Plunger/Arm/StaticBody.connect("input_event", self, "arm_clicked")
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -89,3 +90,15 @@ func body_exited(node):
 	print("body_exited: ", node.name)
 	if node.name == "ball":
 		reset_launch()
+		
+func arm_clicked(camera, event, click_pos, click_norm, objid):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT:
+			if event.pressed:
+				#print("arm clicked")
+				launch_pull()
+			else:
+				#print("arm unclicked")
+				launch_release()
+
+
