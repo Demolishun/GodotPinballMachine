@@ -1,19 +1,36 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://board/machine_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://controls/DeveloperPanel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game_scene_main.gd" type="Script" id=3]
 [ext_resource path="res://moving_objects/Plunger.tscn" type="PackedScene" id=4]
 [ext_resource path="res://board/WallsLR.tscn" type="PackedScene" id=5]
-[ext_resource path="res://controls/Launch.tscn" type="PackedScene" id=6]
+[ext_resource path="res://moving_objects/BallFeed.tscn" type="PackedScene" id=6]
 [ext_resource path="res://board/CornerCSG.tscn" type="PackedScene" id=7]
+[ext_resource path="res://moving_objects/Paddle.tscn" type="PackedScene" id=8]
+[ext_resource path="res://board/Angle01.tscn" type="PackedScene" id=9]
 
 [sub_resource type="BoxShape" id=1]
 
 [sub_resource type="BoxShape" id=2]
 
 [sub_resource type="Animation" id=3]
-resource_name = "PlungerAnimPull"
+resource_name = "BallFeedPush"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Base/FeedButton:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -16.15, 2, 40.1 ), Vector3( -16.15, 2, 39.6 ) ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Base/Plunger/Arm:translation")
@@ -28,6 +45,41 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 2 ) ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "LeftPaddle"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Base/LeftPaddle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 45, 0 ), Vector3( 0, 90, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "RightPaddle"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Base/RightPaddle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -45, 0 ), Vector3( 0, -90, 0 ) ]
+}
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 1, 0.9, 1 )
+
 [node name="Root" type="Spatial"]
 script = ExtResource( 3 )
 
@@ -36,16 +88,15 @@ script = ExtResource( 3 )
 [node name="Area" type="Area" parent="Base"]
 space_override = 3
 gravity_vec = Vector3( 0, -1, 2 )
+priority = 5.0
 
 [node name="CollisionShape" type="CollisionShape" parent="Base/Area"]
+process_priority = 1
 transform = Transform( 20, 0, 0, 0, 2, 0, 0, 0, 40, 0, 3, 0 )
 shape = SubResource( 1 )
 
 [node name="Plunger" parent="Base" instance=ExtResource( 4 )]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 18, 2.1, 35.5 )
-
-[node name="Arm" parent="Base/Plunger" index="1"]
-transform = Transform( 0.5, 0, 0, 0, -8.14603e-07, -0.5, 0, 2.5, -4.07302e-08, 0, 0, 2 )
 
 [node name="BallSpawner" parent="Base/Plunger/Arm" index="1"]
 space_override = 3
@@ -56,10 +107,31 @@ priority = 1.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.8, 16.3, 1.6, 7.2 )
 
 [node name="CornerUR" parent="Base" instance=ExtResource( 7 )]
-transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 8, 11.15, 3, -31.15 )
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 8, 11.6, 2.5, -31.6 )
+
+[node name="CornerBR" parent="Base" instance=ExtResource( 7 )]
+transform = Transform( -1.30337e-06, 0, -8, 0, 2, 0, 8, 0, -1.30337e-06, 8.3, 1.5, 28.5 )
 
 [node name="CornerUL" parent="Base" instance=ExtResource( 7 )]
-transform = Transform( -1.30337e-06, 0, 8, 0, 2, 0, -8, 0, -1.30337e-06, -11.2, 3, -31.25 )
+transform = Transform( -1.30337e-06, 0, 8, 0, 2, 0, -8, 0, -1.30337e-06, -11.6, 2.5, -31.6 )
+
+[node name="CornerBL" parent="Base" instance=ExtResource( 7 )]
+transform = Transform( -8, 0, -2.60673e-06, 0, 2, 0, 2.60673e-06, 0, -8, -11.6, 1.5, 28.5 )
+
+[node name="FeedButton" parent="Base" instance=ExtResource( 6 )]
+transform = Transform( 0.8, 0, 0, 0, -2.18557e-08, -0.8, 0, 0.5, -3.49691e-08, -16.15, 2, 40.1 )
+
+[node name="LeftPaddle" parent="Base" instance=ExtResource( 8 )]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1.5, 0, -0.707107, 0, 0.707107, -6.75, 1.85, 30 )
+
+[node name="RightPaddle" parent="Base" instance=ExtResource( 8 )]
+transform = Transform( 0.707107, 0, -0.707107, 0, 1.5, 0, 0.707107, 0, 0.707107, 3.4, 1.85, 30 )
+
+[node name="AngleL" parent="Base" instance=ExtResource( 9 )]
+transform = Transform( 1.41421, 0, 1.41421, 0, 1.5, 0, -1.41421, 0, 1.41421, -19.2, 2.1, 8.5 )
+
+[node name="AngleR" parent="Base" instance=ExtResource( 9 )]
+transform = Transform( -1.41421, 0, -1.41421, 0, 1.5, 0, 1.41421, 0, -1.41421, 15.9, 2.1, 8.5 )
 
 [node name="Main Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 30, 55 )
@@ -71,23 +143,36 @@ margin_top = 27.0
 margin_right = -880.0
 margin_bottom = -363.0
 
-[node name="StaticBody" type="StaticBody" parent="."]
-transform = Transform( 20, 0, 0, 0, 0.1, 0, 0, 0, 40, 0, 5, 0 )
+[node name="GlassTop" type="StaticBody" parent="."]
+process_priority = 5
+transform = Transform( 20, 0, 0, 0, 0.5, 0, 0, 0, 40, 0, 5, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="GlassTop"]
 shape = SubResource( 2 )
 
-[node name="Launch" parent="." instance=ExtResource( 6 )]
-visible = false
-margin_left = 7.0
-margin_top = 342.0
-margin_right = 7.0
-
-[node name="LaunchTimer" type="Timer" parent="."]
-process_mode = 0
-one_shot = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/PlungerAnimPull = SubResource( 3 )
+anims/BallFeedPush = SubResource( 3 )
+anims/PlungerAnimPull = SubResource( 4 )
+
+[node name="AnimationPlayerLeft" type="AnimationPlayer" parent="."]
+anims/LeftPaddle = SubResource( 5 )
+
+[node name="AnimationPlayerRight" type="AnimationPlayer" parent="."]
+anims/RightPaddle = SubResource( 6 )
+
+[node name="BallEater" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65, 0, 28.2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BallEater"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 0.5, 0, 2.85, 10.25 )
+shape = SubResource( 7 )
+
+[node name="Balls" type="Node" parent="."]
+
+[editable path="Base"]
+
+[editable path="Base/Floor"]
 
 [editable path="Base/Plunger"]
+
+[editable path="Base/FeedButton"]

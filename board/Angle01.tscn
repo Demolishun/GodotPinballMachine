@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="Angle" type="CSGCombiner"]
+use_collision = true
+
+[node name="Box" type="CSGBox" parent="."]
+
+[node name="Cutter" type="CSGBox" parent="."]
+transform = Transform( 1.41421, 0, 0.707107, 0, 1.2, 0, -1.41421, 0, 0.707107, -0.4, 0, -1 )
+operation = 2

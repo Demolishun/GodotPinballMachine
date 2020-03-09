@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="CylinderMesh" id=2]
+
+[node name="Combiner" type="CSGCombiner"]
+use_collision = true
+
+[node name="Box" type="CSGMesh" parent="."]
+mesh = SubResource( 1 )
+
+[node name="Cylinder" type="CSGMesh" parent="."]
+transform = Transform( 2, 0, 0, 0, 1.1, 0, 0, 0, 2, -1.05, 0, 1.05 )
+operation = 2
+mesh = SubResource( 2 )
+
+[node name="Cylinder2" type="CSGMesh" parent="."]
+transform = Transform( 2, 0, 0, 0, 1.1, 0, 0, 0, 2, -1, 0, 1 )
+operation = 1
+mesh = SubResource( 2 )
