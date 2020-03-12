@@ -3,9 +3,8 @@
 [sub_resource type="CapsuleShape" id=1]
 height = 3.0
 
-[node name="Paddle" type="RigidBody"]
+[node name="Bumper" type="RigidBody"]
 mode = 3
-can_sleep = false
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 

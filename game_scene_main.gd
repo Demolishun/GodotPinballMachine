@@ -7,7 +7,7 @@ var dont_spawn = false
 const ball_spawn_vect = Vector3(0,0,0)
 const timer_max_time = 3.0
 var launch_force = 0.0
-const max_launch_force = 1000
+const max_launch_force = 10000
 const launch_vec = Vector3(0,0,-1)
 var start_vec 
 var start_grav
@@ -44,9 +44,9 @@ func _process(delta):
 	elif Input.is_action_just_released("ui_accept"):
 		ballfeed_up()
 	# launch
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_select"):
 		launch_pull()
-	elif Input.is_action_just_released("ui_cancel"):
+	elif Input.is_action_just_released("ui_select"):
 		launch_release()
 	# paddles
 	if Input.is_action_just_pressed("ui_left"):
@@ -57,6 +57,9 @@ func _process(delta):
 		rpaddle_press()
 	elif Input.is_action_just_released("ui_right"):
 		rpaddle_unpress()
+		
+	if Input.is_action_just_pressed("ui_cancel"):
+		pass
 	
 func lpaddle_press():
 	lpaddle_state = true

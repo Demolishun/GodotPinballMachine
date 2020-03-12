@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://board/machine_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://controls/DeveloperPanel.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://board/CornerCSG.tscn" type="PackedScene" id=7]
 [ext_resource path="res://moving_objects/Paddle.tscn" type="PackedScene" id=8]
 [ext_resource path="res://board/Angle01.tscn" type="PackedScene" id=9]
+[ext_resource path="res://moving_objects/Bumper.tscn" type="PackedScene" id=10]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -132,6 +133,12 @@ transform = Transform( 1.41421, 0, 1.41421, 0, 1.5, 0, -1.41421, 0, 1.41421, -19
 
 [node name="AngleR" parent="Base" instance=ExtResource( 9 )]
 transform = Transform( -1.41421, 0, -1.41421, 0, 1.5, 0, 1.41421, 0, -1.41421, 15.9, 2.1, 8.5 )
+
+[node name="Bumper" parent="Base" instance=ExtResource( 10 )]
+transform = Transform( 0.422618, 0, -0.906308, 0, 2, 0, 0.906308, 0, 0.422618, 9.95, 2, 26.1 )
+
+[node name="Bumper2" parent="Base" instance=ExtResource( 10 )]
+transform = Transform( 0.422618, 0, 0.906308, 0, 2, 0, -0.906308, 0, 0.422618, -13.2, 2, 26.1 )
 
 [node name="Main Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 30, 55 )
