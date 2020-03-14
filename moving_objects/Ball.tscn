@@ -4,7 +4,7 @@
 [ext_resource path="res://moving_objects/Ball.gd" type="Script" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
-friction = 0.05
+friction = 0.25
 bounce = 0.2
 
 [sub_resource type="SphereMesh" id=2]
@@ -12,7 +12,7 @@ bounce = 0.2
 [sub_resource type="SpatialMaterial" id=3]
 albedo_texture = ExtResource( 1 )
 metallic = 1.0
-uv1_scale = Vector3( 2, 2, 1 )
+uv1_scale = Vector3( 2, 1, 1 )
 
 [sub_resource type="SphereShape" id=4]
 
@@ -21,6 +21,7 @@ mass = 100.0
 physics_material_override = SubResource( 1 )
 continuous_cd = true
 can_sleep = false
+angular_damp = 0.1
 script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

@@ -16,6 +16,8 @@ var ballfeed_state = false
 var lpaddle_state = false
 var rpaddle_state = false
 
+export var flinger_force = 2000
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("_ready")
@@ -161,5 +163,6 @@ func ball_entered_eater(node):
 	print(node.name)
 	if node.get_parent() == $Balls:
 		node.queue_free()
+		$APBackBoard1.play("RedFlash",-1,2.0,false)
 
 
