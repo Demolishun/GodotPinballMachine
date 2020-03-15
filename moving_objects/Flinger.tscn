@@ -23,12 +23,14 @@ tracks/0/keys = {
 
 [node name="Flinger" type="RigidBody"]
 mode = 3
+continuous_cd = true
 contacts_reported = 5
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1.1, 0, 0, 0, 1.5, 0, 0, 0, 1.1, 0, 0.55, 0 )
 shape = SubResource( 1 )
 
 [node name="Mover" type="MeshInstance" parent="."]
