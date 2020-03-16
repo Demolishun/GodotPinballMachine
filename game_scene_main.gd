@@ -1,6 +1,7 @@
 extends Spatial
 
 const ball_scene = preload("res://moving_objects/Ball.tscn")
+const balltrans_scene = preload("res://moving_objects/BallTrans.tscn")
 #const base = get_node(@"/root/Root/Base")
 #const main_scene = main_scene = get_node(@"/root/Root")
 var dont_spawn = false
@@ -21,6 +22,9 @@ export var flinger_force = 2000
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("_ready")
+	
+	# make it random
+	randomize()
 	
 	$AnimationPlayer.play("PlungerAnimPull", -1, -20.0, false)
 	start_vec = $Base/Plunger/Arm/BallSpawner.gravity_vec
@@ -85,8 +89,12 @@ func spawn_ball():
 	if !dont_spawn && !$Balls.get_child_count():
 		print("spawn_ball")
 		#var base = get_node(@"/root/Root/Base")
-		var main_scene = get_node(@"/root/Root")	
-		var ball = ball_scene.instance()
+		var main_scene = get_node(@"/root/Root")
+		var ball
+		if randi() % 4 == 0:
+			ball = balltrans_scene.instance()	
+		else:
+			ball = ball_scene.instance()		
 		ball.name = "ball"
 		$Balls.add_child(ball)
 		var ball_spawner = $Base/Plunger/Arm/BallSpawner/CollisionShape		

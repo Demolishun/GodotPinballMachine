@@ -23,12 +23,18 @@ func _ready():
 
 func _on_OneWay_body_entered(body):	
 	if ng and body.get_parent() == ng:
-		print("OneWay:", body.name)
-		var lv = Vector3(body.linear_velocity)
-		var speed = lv.length()
-		var gtrans = global_transform.basis.xform(force_dir)
-		body.linear_velocity = gtrans*speed*force_fudge
-		#print(body.linear_velocity)
-		#var angle = lv.angle_to(global_transform.basis.xform(Vector3(0,1,0)))
-		
+		if 0:
+			print("OneWay:", body.name)
+			var lv = Vector3(body.linear_velocity)
+			var speed = lv.length()
+			var gtrans = global_transform.basis.xform(force_dir)
+			body.linear_velocity = gtrans*speed*force_fudge			
+		else:
+			print("other one way:", body.name)
+			var body_dir = body.linear_velocity.normalized()
+			var owdir = global_transform.basis.xform(force_dir).normalized()
+			#var owdir = transform.basis.z # huh?
+			if owdir.dot(body_dir) < 0:
+				body.linear_velocity = body.linear_velocity.bounce(owdir)
+			
 		
