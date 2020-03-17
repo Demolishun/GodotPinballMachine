@@ -19,6 +19,11 @@ var rpaddle_state = false
 
 export var flinger_force = 2000
 
+func isBall(node):
+	if node.get_parent() == $Balls:
+		return true
+	return false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("_ready")
@@ -65,7 +70,8 @@ func _process(delta):
 		rpaddle_unpress()
 		
 	if Input.is_action_just_pressed("ui_cancel"):
-		pass
+		var res = load("res://controls/MainMenu.tscn")
+		get_tree().change_scene_to(res)
 	
 func lpaddle_press():
 	lpaddle_state = true
@@ -119,8 +125,9 @@ func animation_finished(anim_name):
 		if launch_force > 0.0:
 			print("launch_ball: ", launch_force)			
 			for node in $Base/Plunger/Arm/BallSpawner.get_overlapping_bodies():
-				print(node.name)	
-				node.apply_impulse(Vector3(0,0,0), Vector3(0,0,-1*launch_force*max_launch_force))
+				if isBall(node):
+					print(node.name)	
+					node.apply_impulse(Vector3(0,0,0), Vector3(0,0,-1*launch_force*max_launch_force))
 			
 			
 func reset_launch():
@@ -169,7 +176,7 @@ func ballfeed_up():
 				
 func ball_entered_eater(node):
 	print(node.name)
-	if node.get_parent() == $Balls:
+	if isBall(node):
 		node.queue_free()
 		$APBackBoard1.play("RedFlash",-1,2.0,false)
 

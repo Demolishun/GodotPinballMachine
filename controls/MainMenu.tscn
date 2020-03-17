@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://controls/MainMenu.gd" type="Script" id=1]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 2.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelButtons" type="Panel" parent="."]
+margin_left = 307.874
+margin_top = 90.2143
+margin_right = 707.874
+margin_bottom = 490.214
+__meta__ = {
+"_edit_use_anchors_": false
+}
